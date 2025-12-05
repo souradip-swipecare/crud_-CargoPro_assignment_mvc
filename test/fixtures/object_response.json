@@ -1,0 +1,8 @@
+{
+  "id": "1",
+  "name": "Sample Object",
+  "data": {
+    "key1": "value1",
+    "key2": "value2"
+  }
+}
