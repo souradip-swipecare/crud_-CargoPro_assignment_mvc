@@ -100,6 +100,7 @@ lib/
 
 
 The structure is designed to be clean, scalable and easy to maintain.
+# Also after login only user can perfrom the CRUD operations as those routes are protected by auth guard also use session s maintained by firebase nstance user
 All controllers contain pure business logic.
 All API interactions go through a separate service class.
 All errors funnel through a central exception handler.
