@@ -35,16 +35,38 @@ class _ObjectFormViewState extends State<ObjectFormView> {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        actions: [
+  if (obj != null)
+    Container(
+      margin: const EdgeInsets.only(right: 14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE0E0E0),
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.white,
+            offset: Offset(-3, -3),
+            blurRadius: 6,
+          ),
+          BoxShadow(
+            color: Colors.black26,
+            offset: Offset(3, 3),
+            blurRadius: 6,
+          ),
+        ],
       ),
-
-      backgroundColor: const Color(0xFFF8F8F8),
-
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+      child: IconButton(
+        icon: const Icon(Icons.add, color: Colors.black87),
         onPressed: () {
           setState(() => fields.add(const MapEntry("", "")));
         },
       ),
+    ),
+],
+
+      ),
+
+      backgroundColor: const Color(0xFFF8F8F8),
 
       body: ListView(
         padding: const EdgeInsets.all(20),
@@ -110,58 +132,57 @@ class _ObjectFormViewState extends State<ObjectFormView> {
           const SizedBox(height: 30),
 
           Obx(() {
-  final isCreate = obj == null;
-  final bool isLoading = 
-      isCreate ? controller.createLoading.value 
-               : controller.updateLoading.value;
+            final isCreate = obj == null;
+            final bool isLoading = isCreate
+                ? controller.createLoading.value
+                : controller.updateLoading.value;
 
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(22),
-      ),
-    ),
+            return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22),
+                ),
+              ),
 
-    onPressed: isLoading
-        ? null // disable button during loading
-        : () async {
-            final data = {
-              for (var f in fields)
-                if (f.key.trim().isNotEmpty) f.key: f.value,
-            };
+              onPressed: isLoading
+                  ? null // disable button during loading
+                  : () async {
+                      final data = {
+                        for (var f in fields)
+                          if (f.key.trim().isNotEmpty) f.key: f.value,
+                      };
 
-            final newObj = ApiObject(
-              id: obj?.id,
-              name: nameCtrl.text.trim(),
-              data: data,
+                      final newObj = ApiObject(
+                        id: obj?.id,
+                        name: nameCtrl.text.trim(),
+                        data: data,
+                      );
+
+                      bool ok;
+                      if (isCreate) {
+                        ok = await controller.create(newObj);
+                      } else {
+                        ok = await controller.updateobj(newObj);
+                      }
+
+                      if (ok) {
+                        Get.offAndToNamed("/home");
+                      }
+                    },
+
+              child: isLoading
+                  ? const SizedBox(
+                      height: 22,
+                      width: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(isCreate ? "Create Object" : "Update Object"),
             );
-
-            bool ok;
-            if (isCreate) {
-              ok = await controller.create(newObj);
-            } else {
-              ok = await controller.updateobj(newObj);
-            }
-
-            if (ok) {
-              Get.offAndToNamed("/home");
-            }
-        },
-
-    child: isLoading
-        ? const SizedBox(
-            height: 22,
-            width: 22,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: Colors.white,
-            ),
-          )
-        : Text(isCreate ? "Create Object" : "Update Object"),
-  );
-})
-
+          }),
         ],
       ),
     );

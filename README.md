@@ -227,13 +227,14 @@ Improve responsiveness with breakpoints for large screens.
 Add unit tests for controllers and services.
 
 # 11. Running the Project
-Mobile (Android/iOS)
+
+# Mobile (Android/iOS)
 flutter pub get
 flutter run
 
-Web
+# Web
 flutter run -d chrome
 
-Build for Firebase Hosting
+# Build for Firebase Hosting
 flutter build web
 firebase deploy
