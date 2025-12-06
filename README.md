@@ -15,6 +15,9 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+================================================
+# Video URL
+
 
 
 ================================================
@@ -69,8 +72,10 @@ Shimmer is used for loading placeholders.
 Optional packages like Bloc and Provider can be used for more structured state layers if needed.
 
 ## 3. Project Structure
+
 lib/
  ├── controllers/
+ |
  │    ├── auth_controller.dart
  │    └── object_controller.dart
  │
@@ -230,6 +235,7 @@ Add unit tests for controllers and services.
 
 # Mobile (Android/iOS)
 flutter pub get
+
 flutter run
 
 # Web
@@ -237,4 +243,5 @@ flutter run -d chrome
 
 # Build for Firebase Hosting
 flutter build web
+
 firebase deploy
